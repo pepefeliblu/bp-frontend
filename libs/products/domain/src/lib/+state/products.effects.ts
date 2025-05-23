@@ -28,5 +28,30 @@ export class ProductsEffects {
     },
     { functional: true }
   );
+
+  addProduct$ = createEffect(
+    () => {
+      return this.actions$.pipe(
+        ofType(ProductsActions.addProduct),
+        switchMap(({ product }) =>
+          this.productsService.addProduct(product).pipe(
+            map((createdProduct) => ProductsActions.addProductSuccess({ product: createdProduct })),
+            catchError((error) => of(ProductsActions.addProductFailure({ error: error.message })))
+          )
+        )
+      );
+    },
+    { functional: true }
+  );
+
+  reloadProductsOnAdd$ = createEffect(
+    () => {
+      return this.actions$.pipe(
+        ofType(ProductsActions.addProductSuccess),
+        map(() => ProductsActions.loadProducts())
+      );
+    },
+    { functional: true }
+  );
 }
 

@@ -19,6 +19,7 @@
     <div class="product-list__search">
       <input [formControl]="searchControl" type="text" placeholder="Search..." aria-label="Buscar productos" />
     </div>
+    <button class="agregar-btn" (click)="openAddProductModal()">Agregar</button>
   </div>
 
   <!-- Loading state -->
@@ -86,3 +87,4 @@
     </ng-container>
   </ng-container>
 </div>
+<lib-add-product *ngIf="showAddProductModal" (closeEmitter)="closeAddProductModal()" (submitProduct)="handleAddProduct($event)"></lib-add-product>

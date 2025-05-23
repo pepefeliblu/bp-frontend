@@ -23,6 +23,26 @@ export const productsReducer = createReducer(
     ...state,
     loading: false,
     error
+  })),
+
+  on(ProductsActions.addProduct, (state) => ({
+    ...state,
+    loading: true,
+    error: null
+  })),
+
+  on(ProductsActions.addProductSuccess, (state, { product }) =>
+    productsAdapter.addOne(product, {
+      ...state,
+      loading: false,
+      loaded: true
+    })
+  ),
+
+  on(ProductsActions.addProductFailure, (state, { error }) => ({
+    ...state,
+    loading: false,
+    error
   }))
 );
 

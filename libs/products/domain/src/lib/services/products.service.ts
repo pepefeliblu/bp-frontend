@@ -18,5 +18,9 @@ export class ProductsService {
   verifyProductId(id: string): Observable<boolean> {
     return this.http.get<boolean>(`${this.API_URL}/verification/${id}`);
   }
+
+  addProduct(product: Product): Observable<Product> {
+    return this.http.post<Product>(this.API_URL, product);
+  }
 }
 

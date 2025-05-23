@@ -7,11 +7,13 @@ import {
   loadProducts,
   selectAllProducts,
   selectProductsError,
-  selectProductsLoading
+  selectProductsLoading,
+  addProduct
 } from '@bp-frontend/products-domain';
 import {FormControl, ReactiveFormsModule} from '@angular/forms';
 import { TooltipDirective } from '../tooltip/tooltip.directive';
 import { map, startWith } from 'rxjs/operators';
+import { AddProductComponent } from '../add-product/add-product.component';
 
 @Component({
   // eslint-disable-next-line @angular-eslint/component-selector
@@ -19,7 +21,7 @@ import { map, startWith } from 'rxjs/operators';
   templateUrl: './product-list.component.html',
   styleUrls: ['./product-list.component.scss'],
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, TooltipDirective]
+  imports: [CommonModule, ReactiveFormsModule, TooltipDirective, AddProductComponent]
 })
 export class ProductListComponent implements OnInit, OnDestroy {
   private readonly destroy$ = new Subject<void>();
@@ -31,6 +33,8 @@ export class ProductListComponent implements OnInit, OnDestroy {
 
   searchControl = new FormControl('');
   pageSizeControl = new FormControl(5);
+
+  showAddProductModal = false;
 
   get isSearchActive(): boolean {
     return !!this.searchControl.value && this.searchControl.value.trim().length > 0;
@@ -68,6 +72,19 @@ export class ProductListComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     this.destroy$.next();
     this.destroy$.complete();
+  }
+
+  openAddProductModal() {
+    this.showAddProductModal = true;
+  }
+
+  closeAddProductModal() {
+    this.showAddProductModal = false;
+  }
+
+  handleAddProduct(product: any) {
+    this.store.dispatch(addProduct({ product }));
+    this.closeAddProductModal();
   }
 }
 
