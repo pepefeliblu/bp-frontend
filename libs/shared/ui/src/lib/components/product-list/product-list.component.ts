@@ -30,6 +30,7 @@ export class ProductListComponent implements OnInit, OnDestroy {
   error$: Observable<string | null>;
 
   searchControl = new FormControl('');
+  pageSizeControl = new FormControl(5);
 
   get isSearchActive(): boolean {
     return !!this.searchControl.value && this.searchControl.value.trim().length > 0;
@@ -43,16 +44,19 @@ export class ProductListComponent implements OnInit, OnDestroy {
 
     this.filteredProducts$ = combineLatest([
       this.products$,
-      this.searchControl.valueChanges.pipe(startWith(''))
+      this.searchControl.valueChanges.pipe(startWith('')),
+      this.pageSizeControl.valueChanges.pipe(startWith(this.pageSizeControl.value))
     ]).pipe(
-      map(([products, search]) => {
-        if (!search || typeof search !== 'string' || !search.trim()) {
-          return products;
+      map(([products, search, pageSize]) => {
+        const size = Number(pageSize);
+        let filtered = products;
+        if (search && typeof search === 'string' && search.trim()) {
+          const pattern = new RegExp(search.trim(), 'i');
+          filtered = products.filter(product =>
+            pattern.test(product.name) || pattern.test(product.description)
+          );
         }
-        const pattern = new RegExp(search.trim(), 'i');
-        return products.filter(product =>
-          pattern.test(product.name) || pattern.test(product.description)
-        );
+        return filtered.slice(0, size);
       })
     );
   }
