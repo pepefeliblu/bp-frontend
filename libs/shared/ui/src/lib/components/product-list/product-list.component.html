@@ -76,6 +76,7 @@
                 </button>
                 <div class="context-menu-dropdown" *ngIf="contextMenuOpenId === product.id" (click)="$event.stopPropagation()">
                   <button (click)="openEditProductModal(product); contextMenuOpenId = null">Editar</button>
+                  <button (click)="openDeleteProductModal(product); contextMenuOpenId = null">Eliminar</button>
                 </div>
               </td>
             </tr>
@@ -102,3 +103,17 @@
   </ng-container>
 </div>
 <lib-add-product *ngIf="showAddProductModal" (closeEmitter)="closeAddProductModal()" (submitProduct)="handleAddProduct($event)" [product]="selectedProduct"></lib-add-product>
+
+<ng-container *ngIf="productToDelete">
+  <div class="delete-modal-backdrop" (click)="closeDeleteProductModal()">
+    <div class="delete-modal" (click)="$event.stopPropagation()">
+      <div class="delete-modal__content">
+        <p>¿Estas seguro de eliminar el producto <b>{{ productToDelete.name }}</b>?</p>
+      </div>
+      <div class="delete-modal__actions">
+        <button class="delete-cancel-btn" (click)="closeDeleteProductModal()">Cancelar</button>
+        <button class="delete-confirm-btn" (click)="confirmDeleteProduct()">Confirmar</button>
+      </div>
+    </div>
+  </div>
+</ng-container>

@@ -63,6 +63,26 @@ export const productsReducer = createReducer(
     ...state,
     loading: false,
     error
+  })),
+
+  on(ProductsActions.deleteProduct, (state) => ({
+    ...state,
+    loading: true,
+    error: null
+  })),
+
+  on(ProductsActions.deleteProductSuccess, (state, { id }) =>
+    productsAdapter.removeOne(id, {
+      ...state,
+      loading: false,
+      loaded: true
+    })
+  ),
+
+  on(ProductsActions.deleteProductFailure, (state, { error }) => ({
+    ...state,
+    loading: false,
+    error
   }))
 );
 

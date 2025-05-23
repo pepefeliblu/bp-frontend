@@ -9,7 +9,8 @@ import {
   selectProductsError,
   selectProductsLoading,
   addProduct,
-  updateProduct
+  updateProduct,
+  deleteProduct
 } from '@bp-frontend/products-domain';
 import {FormControl, ReactiveFormsModule} from '@angular/forms';
 import { TooltipDirective } from '../tooltip/tooltip.directive';
@@ -38,6 +39,7 @@ export class ProductListComponent implements OnInit, OnDestroy {
   showAddProductModal = false;
   selectedProduct: Product | null = null;
   contextMenuOpenId: string | null = null;
+  productToDelete: Product | null = null;
 
   get isSearchActive(): boolean {
     return !!this.searchControl.value && this.searchControl.value.trim().length > 0;
@@ -99,6 +101,21 @@ export class ProductListComponent implements OnInit, OnDestroy {
       this.store.dispatch(addProduct({ product }));
     }
     this.closeAddProductModal();
+  }
+
+  openDeleteProductModal(product: Product) {
+    this.productToDelete = product;
+  }
+
+  closeDeleteProductModal() {
+    this.productToDelete = null;
+  }
+
+  confirmDeleteProduct() {
+    if (this.productToDelete) {
+      this.store.dispatch(deleteProduct({ id: this.productToDelete.id }));
+      this.closeDeleteProductModal();
+    }
   }
 }
 

@@ -78,5 +78,30 @@ export class ProductsEffects {
     },
     { functional: true }
   );
+
+  deleteProduct$ = createEffect(
+    () => {
+      return this.actions$.pipe(
+        ofType(ProductsActions.deleteProduct),
+        switchMap(({ id }) =>
+          this.productsService.deleteProduct(id).pipe(
+            map(() => ProductsActions.deleteProductSuccess({ id })),
+            catchError((error) => of(ProductsActions.deleteProductFailure({ error: error.message })))
+          )
+        )
+      );
+    },
+    { functional: true }
+  );
+
+  reloadProductsOnDelete$ = createEffect(
+    () => {
+      return this.actions$.pipe(
+        ofType(ProductsActions.deleteProductSuccess),
+        map(() => ProductsActions.loadProducts())
+      );
+    },
+    { functional: true }
+  );
 }
 
