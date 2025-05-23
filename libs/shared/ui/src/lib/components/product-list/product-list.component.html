@@ -35,7 +35,7 @@
 
   <!-- Products table -->
   <ng-container *ngIf="(loading$ | async) === false">
-    <ng-container *ngIf="products$ | async as products">
+    <ng-container *ngIf="(isSearchActive ? filteredProducts$ : products$) | async as products">
       <div *ngIf="products.length > 0; else noProducts" class="product-list__table-container">
         <table class="product-list__table">
           <thead>
@@ -70,13 +70,14 @@
 
       <ng-template #noProducts>
         <div class="product-list__empty">
-          <p>No products found</p>
+          <p>Sin Resultados</p>
         </div>
       </ng-template>
 
       <div class="product-list__footer">
         <div *ngIf="products.length" class="product-list__results-count">{{ products.length }} {{products.length > 1 ? 'Resultados' : 'Resultado'}}</div>
         <div *ngIf="!products.length" class="product-list__results-count">Sin Resultados</div>
+        <!-- Pagination dropdown will go here -->
       </div>
     </ng-container>
   </ng-container>
