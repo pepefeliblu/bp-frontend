@@ -1,1 +1,39 @@
 /* You can add global styles to this file, and also import other style files */
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
+
+body {
+  font-family: 'Inter', 'Roboto', 'Helvetica Neue', Arial, sans-serif;
+  background: #f6f8fa;
+  color: #222;
+  margin: 0;
+}
+
+.bp-tooltip-portal {
+  background: #222;
+  color: #fff;
+  border-radius: 6px;
+  box-shadow: 0 2px 8px rgba(0,43,91,0.12);
+  padding: 0.5em 1em;
+  font-size: 0.95em;
+  z-index: 9999;
+  white-space: normal;
+  pointer-events: none;
+  position: fixed;
+  transition: opacity 0.18s cubic-bezier(0.4,0,0.2,1);
+  opacity: 0;
+  animation: tooltip-fade-in 0.18s forwards;
+}
+.bp-tooltip-portal::after {
+  content: '';
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  border-width: 6px;
+  border-style: solid;
+  border-color: #222 transparent transparent transparent;
+}
+@keyframes tooltip-fade-in {
+  to { opacity: 1; }
+}

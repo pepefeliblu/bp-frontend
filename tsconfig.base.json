@@ -14,7 +14,13 @@
     "skipLibCheck": true,
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
-    "paths": {}
+    "paths": {
+      "@bp-frontend/products-domain": ["libs/products/domain/src/index.ts"],
+      "@bp-frontend/products-domain/*": ["libs/products/domain/src/*"],
+      "@bp-frontend/shared-models": ["libs/shared/models/src/index.ts"],
+      "@bp-frontend/shared-ui": ["libs/shared/ui/src/index.ts"],
+      "@bp-frontend/shared-utils": ["libs/shared/utils/src/index.ts"]
+    }
   },
   "exclude": ["node_modules", "tmp"]
 }

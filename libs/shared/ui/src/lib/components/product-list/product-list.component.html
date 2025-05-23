@@ -1,0 +1,83 @@
+<div class="product-list-title-wrapper">
+  <h1 class="product-list__title">
+    <span class="product-list__icon" aria-hidden="true">
+      <!-- Overlapping card-like SVG icon with a circle in the center -->
+      <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <!-- Back card -->
+        <rect x="10" y="4" width="16" height="12" rx="2" fill="#E3EAFD" stroke="#002B5B" stroke-width="1.5"/>
+        <!-- Front card -->
+        <rect x="6" y="10" width="16" height="12" rx="2" fill="#fff" stroke="#002B5B" stroke-width="1.5"/>
+        <!-- Circle in the center of the front card -->
+        <circle cx="14" cy="16" r="2.2" fill="#E3EAFD" stroke="#002B5B" stroke-width="1.2"/>
+      </svg>
+    </span>
+    BANCO
+  </h1>
+</div>
+<div class="product-list">
+  <div class="product-list__header">
+    <div class="product-list__search">
+      <input [formControl]="searchControl" type="text" placeholder="Search..." aria-label="Buscar productos" />
+    </div>
+  </div>
+
+  <!-- Loading state -->
+  <div *ngIf="loading$ | async" class="product-list__loading">
+    <div class="product-list__loading-spinner"></div>
+    <p>Loading products...</p>
+  </div>
+
+  <!-- Error state -->
+  <div *ngIf="error$ | async as error" class="product-list__error">
+    <p>Error loading products: {{ error }}</p>
+    <button (click)="ngOnInit()" class="product-list__retry-btn">Retry</button>
+  </div>
+
+  <!-- Products table -->
+  <ng-container *ngIf="(loading$ | async) === false">
+    <ng-container *ngIf="products$ | async as products">
+      <div *ngIf="products.length > 0; else noProducts" class="product-list__table-container">
+        <table class="product-list__table">
+          <thead>
+            <tr>
+              <th>Logo</th>
+              <th>Nombre del producto</th>
+              <th>
+                Descripción
+                <span class="info-tooltip-icon" [libTooltip]="'Breve descripción del producto'">&#9432;</span>
+              </th>
+              <th>
+                Fecha de liberación
+                <span class="info-tooltip-icon" [libTooltip]="'Fecha en la que el producto fue liberado'">&#9432;</span>
+              </th>
+              <th>
+                Fecha de reestructuración
+                <span class="info-tooltip-icon" [libTooltip]="'Fecha en la que el producto fue reestructurado'">&#9432;</span>
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let product of products">
+              <td><img [src]="product.logo" [alt]="product.name + ' logo'" class="product-list__product-logo"></td>
+              <td>{{ product.name }}</td>
+              <td>{{ product.description }}</td>
+              <td>{{ product.date_release | date:'dd/MM/yyyy' }}</td>
+              <td>{{ product.date_revision | date:'dd/MM/yyyy' }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <ng-template #noProducts>
+        <div class="product-list__empty">
+          <p>No products found</p>
+        </div>
+      </ng-template>
+
+      <div class="product-list__footer">
+        <div *ngIf="products.length" class="product-list__results-count">{{ products.length }} {{products.length > 1 ? 'Resultados' : 'Resultado'}}</div>
+        <div *ngIf="!products.length" class="product-list__results-count">Sin Resultados</div>
+      </div>
+    </ng-container>
+  </ng-container>
+</div>

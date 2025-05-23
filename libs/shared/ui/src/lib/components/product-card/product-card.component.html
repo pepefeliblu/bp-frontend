@@ -1,0 +1,24 @@
+<div class="product-card">
+  <div class="product-card__logo-container">
+    <img
+      [src]="product.logo"
+      [alt]="product.name + ' logo'"
+      class="product-card__logo"
+    >
+  </div>
+  <div class="product-card__content">
+    <h3 class="product-card__title">{{ product.name }}</h3>
+    <p class="product-card__description">{{ product.description }}</p>
+    <div class="product-card__dates">
+      <div class="product-card__date-item date-release">
+        <span class="product-card__date-label">Fecha de liberación:</span>
+        <span class="product-card__date-value">{{ product.date_release | date:'dd/MM/yyyy' }}</span>
+      </div>
+      <div class="product-card__date-item date-revision">
+        <span class="product-card__date-label">Fecha de revisión:</span>
+        <span class="product-card__date-value">{{ product.date_revision | date:'dd/MM/yyyy' }}</span>
+      </div>
+    </div>
+  </div>
+</div>
+

@@ -2,7 +2,16 @@
   "name": "@bp-frontend/source",
   "version": "0.0.0",
   "license": "MIT",
-  "scripts": {},
+  "scripts": {
+    "start": "nx serve bp-frontend",
+    "build": "nx build bp-frontend",
+    "test": "nx run-many --target=test --all",
+    "test:watch": "nx test bp-frontend --watch",
+    "test:ui": "nx test shared-ui",
+    "test:ui:watch": "nx test shared-ui --watch",
+    "lint": "nx lint bp-frontend",
+    "lint:all": "nx run-many --target=lint --all"
+  },
   "private": true,
   "dependencies": {
     "@angular/common": "~19.2.0",
@@ -12,6 +21,10 @@
     "@angular/platform-browser": "~19.2.0",
     "@angular/platform-browser-dynamic": "~19.2.0",
     "@angular/router": "~19.2.0",
+    "@ngrx/effects": "^19.2.0",
+    "@ngrx/entity": "^19.2.0",
+    "@ngrx/store": "^19.2.0",
+    "@ngrx/store-devtools": "^19.2.0",
     "rxjs": "~7.8.0",
     "zone.js": "~0.15.0"
   },
