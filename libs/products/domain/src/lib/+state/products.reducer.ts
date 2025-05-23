@@ -43,6 +43,26 @@ export const productsReducer = createReducer(
     ...state,
     loading: false,
     error
+  })),
+
+  on(ProductsActions.updateProduct, (state) => ({
+    ...state,
+    loading: true,
+    error: null
+  })),
+
+  on(ProductsActions.updateProductSuccess, (state, { product }) =>
+    productsAdapter.updateOne({ id: product.id, changes: product }, {
+      ...state,
+      loading: false,
+      loaded: true
+    })
+  ),
+
+  on(ProductsActions.updateProductFailure, (state, { error }) => ({
+    ...state,
+    loading: false,
+    error
   }))
 );
 

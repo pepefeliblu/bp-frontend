@@ -55,6 +55,7 @@
                 Fecha de reestructuración
                 <span class="info-tooltip-icon" [libTooltip]="'Fecha en la que el producto fue reestructurado'">&#9432;</span>
               </th>
+              <th></th>
             </tr>
           </thead>
           <tbody>
@@ -64,6 +65,19 @@
               <td>{{ product.description }}</td>
               <td>{{ product.date_release | date:'dd/MM/yyyy' }}</td>
               <td>{{ product.date_revision | date:'dd/MM/yyyy' }}</td>
+              <td style="position: relative;">
+                <button class="context-menu-btn"
+                        tabindex="0"
+                        (click)="$event.stopPropagation(); contextMenuOpenId = (contextMenuOpenId === product.id ? null : product.id)"
+                        (keydown.enter)="$event.preventDefault(); contextMenuOpenId = (contextMenuOpenId === product.id ? null : product.id)"
+                        (keydown.space)="$event.preventDefault(); contextMenuOpenId = (contextMenuOpenId === product.id ? null : product.id)"
+                        aria-label="Abrir menú contextual">
+                  &#8942;
+                </button>
+                <div class="context-menu-dropdown" *ngIf="contextMenuOpenId === product.id" (click)="$event.stopPropagation()">
+                  <button (click)="openEditProductModal(product); contextMenuOpenId = null">Editar</button>
+                </div>
+              </td>
             </tr>
           </tbody>
         </table>
@@ -87,4 +101,4 @@
     </ng-container>
   </ng-container>
 </div>
-<lib-add-product *ngIf="showAddProductModal" (closeEmitter)="closeAddProductModal()" (submitProduct)="handleAddProduct($event)"></lib-add-product>
+<lib-add-product *ngIf="showAddProductModal" (closeEmitter)="closeAddProductModal()" (submitProduct)="handleAddProduct($event)" [product]="selectedProduct"></lib-add-product>

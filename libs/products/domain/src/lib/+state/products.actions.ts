@@ -28,3 +28,18 @@ export const addProductFailure = createAction(
   props<{ error: string }>()
 );
 
+export const updateProduct = createAction(
+  '[Products] Update Product',
+  props<{ product: Product }>()
+);
+
+export const updateProductSuccess = createAction(
+  '[Products] Update Product Success',
+  props<{ product: Product }>()
+);
+
+export const updateProductFailure = createAction(
+  '[Products] Update Product Failure',
+  props<{ error: string }>()
+);
+

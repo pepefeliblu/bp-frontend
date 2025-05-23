@@ -46,8 +46,8 @@
         </div>
       </div>
       <div class="add-product-actions">
-        <button type="button" class="reset-btn" (click)="onReset()">Reiniciar</button>
-        <button type="submit" [disabled]="form.invalid || form.untouched" class="submit-btn">Enviar</button>
+        <button type="button" [disabled]="!!product || form.untouched" class="reset-btn" (click)="onReset()">Reiniciar</button>
+        <button type="submit" [disabled]="form.invalid || form.untouched" class="submit-btn">{{ isEditMode ? 'Guardar' : 'Agregar' }}</button>
       </div>
     </form>
   </div>

@@ -53,5 +53,30 @@ export class ProductsEffects {
     },
     { functional: true }
   );
+
+  updateProduct$ = createEffect(
+    () => {
+      return this.actions$.pipe(
+        ofType(ProductsActions.updateProduct),
+        switchMap(({ product }) =>
+          this.productsService.updateProduct(product).pipe(
+            map((updatedProduct) => ProductsActions.updateProductSuccess({ product: updatedProduct })),
+            catchError((error) => of(ProductsActions.updateProductFailure({ error: error.message })))
+          )
+        )
+      );
+    },
+    { functional: true }
+  );
+
+  reloadProductsOnUpdate$ = createEffect(
+    () => {
+      return this.actions$.pipe(
+        ofType(ProductsActions.updateProductSuccess),
+        map(() => ProductsActions.loadProducts())
+      );
+    },
+    { functional: true }
+  );
 }
 
