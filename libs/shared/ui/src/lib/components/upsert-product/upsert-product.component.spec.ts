@@ -1,27 +1,27 @@
 import { ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
-import { AddProductComponent } from './add-product.component';
+import { UpsertProductComponent } from './upsert-product.component';
 import { By } from '@angular/platform-browser';
 import { ProductsService } from '@bp-frontend/products-domain';
 import { of } from 'rxjs';
 
-describe('AddProductComponent', () => {
-  let component: AddProductComponent;
-  let fixture: ComponentFixture<AddProductComponent>;
+describe('UpsertProductComponent', () => {
+  let component: UpsertProductComponent;
+  let fixture: ComponentFixture<UpsertProductComponent>;
 
   beforeEach(async () => {
     const mockProductsService = {
       verifyProductId: () => of(false) // ID is available by default
     };
-    
+
     await TestBed.configureTestingModule({
-      imports: [AddProductComponent, HttpClientTestingModule],
+      imports: [UpsertProductComponent, HttpClientTestingModule],
       providers: [
         { provide: ProductsService, useValue: mockProductsService }
       ]
     }).compileComponents();
-    
-    fixture = TestBed.createComponent(AddProductComponent);
+
+    fixture = TestBed.createComponent(UpsertProductComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
@@ -88,7 +88,7 @@ describe('AddProductComponent', () => {
     const revisionDate = new Date(futureDate);
     revisionDate.setFullYear(revisionDate.getFullYear() + 1);
     const revisionDateStr = revisionDate.toISOString().slice(0, 10);
-    
+
     component.form.setValue({
       id: 'newid',
       name: 'New Name',
@@ -97,10 +97,10 @@ describe('AddProductComponent', () => {
       date_release: futureDateStr,
       date_revision: revisionDateStr
     });
-    
+
     tick(500); // Wait for async validation
     fixture.detectChanges();
-    
+
     component.onSubmit();
     expect(submitSpy).toHaveBeenCalledWith(expect.objectContaining({
       id: 'newid',
@@ -120,7 +120,7 @@ describe('AddProductComponent', () => {
     const revisionDate = new Date(futureDate);
     revisionDate.setFullYear(revisionDate.getFullYear() + 1);
     const revisionDateStr = revisionDate.toISOString().slice(0, 10);
-    
+
     component.product = {
       id: 'editid',
       name: 'Edit Name',
@@ -131,7 +131,7 @@ describe('AddProductComponent', () => {
     };
     component.ngOnChanges({ product: { currentValue: component.product, previousValue: null, firstChange: true, isFirstChange: () => true } });
     fixture.detectChanges();
-    
+
     component.form.patchValue({
       name: 'Edit Name',
       description: 'Edit Description',
@@ -139,10 +139,10 @@ describe('AddProductComponent', () => {
       date_release: futureDateStr,
       date_revision: revisionDateStr
     });
-    
+
     tick(500); // Wait for async validation
     fixture.detectChanges();
-    
+
     component.onSubmit();
     expect(submitSpy).toHaveBeenCalledWith(expect.objectContaining({
       id: 'editid',

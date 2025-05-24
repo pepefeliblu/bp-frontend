@@ -1,44 +1,17 @@
 import {Component, EventEmitter, Output, OnInit, inject, Input, OnChanges, SimpleChanges} from '@angular/core';
 import { CommonModule } from '@angular/common';
-import {FormBuilder, FormGroup, ReactiveFormsModule, Validators, AbstractControl, ValidationErrors, AsyncValidatorFn} from "@angular/forms";
+import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from "@angular/forms";
 import { ProductsService } from '@bp-frontend/products-domain';
-import { debounceTime, map, switchMap, first } from 'rxjs/operators';
-import { of } from 'rxjs';
-
-function dateTodayOrLater(control: AbstractControl): ValidationErrors | null {
-  if (!control.value) return null;
-  const inputDate = new Date(control.value + 'T00:00:00');
-  const today = new Date();
-  inputDate.setHours(0, 0, 0, 0);
-  today.setHours(0, 0, 0, 0);
-  if (inputDate < today) {
-    return { notTodayOrLater: true };
-  }
-  return null;
-}
-
-function idUniqueValidator(productsService: ProductsService): AsyncValidatorFn {
-  return (control: AbstractControl) => {
-    if (!control.value || control.value.length < 3) {
-      return of(null);
-    }
-    return of(control.value).pipe(
-      debounceTime(400),
-      switchMap(id => productsService.verifyProductId(id)),
-      map(isTaken => (isTaken ? { idTaken: true } : null)),
-      first()
-    );
-  };
-}
+import {dateTodayOrLater, idUniqueValidator} from "./upsert-product.validators";
 
 @Component({
-  selector: 'lib-add-product',
+  selector: 'lib-upsert-product',
   imports: [CommonModule, ReactiveFormsModule],
-  templateUrl: './add-product.component.html',
-  styleUrl: './add-product.component.scss',
+  templateUrl: './upsert-product.component.html',
+  styleUrl: './upsert-product.component.scss',
   standalone: true
 })
-export class AddProductComponent implements OnInit, OnChanges {
+export class UpsertProductComponent implements OnInit, OnChanges {
 
   @Input() product: any = null;
   @Output() closeEmitter = new EventEmitter<void>();

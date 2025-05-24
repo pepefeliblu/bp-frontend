@@ -37,7 +37,7 @@ describe('ProductListComponent', () => {
     const mockProductsService = {
       verifyProductId: () => of(false)
     };
-    
+
     await TestBed.configureTestingModule({
       imports: [ProductListComponent, ReactiveFormsModule, HttpClientTestingModule],
       providers: [
@@ -104,7 +104,7 @@ describe('ProductListComponent', () => {
     component.openAddProductModal();
     fixture.detectChanges();
     expect(component.showAddProductModal).toBeTruthy();
-    const modal = fixture.nativeElement.querySelector('lib-add-product');
+    const modal = fixture.nativeElement.querySelector('lib-upsert-product');
     expect(modal).toBeTruthy();
   });
 

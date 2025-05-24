@@ -102,7 +102,7 @@
     </ng-container>
   </ng-container>
 </div>
-<lib-add-product *ngIf="showAddProductModal" (closeEmitter)="closeAddProductModal()" (submitProduct)="handleAddProduct($event)" [product]="selectedProduct"></lib-add-product>
+<lib-upsert-product *ngIf="showAddProductModal" (closeEmitter)="closeAddProductModal()" (submitProduct)="handleAddProduct($event)" [product]="selectedProduct"></lib-upsert-product>
 
 <ng-container *ngIf="productToDelete">
   <div class="delete-modal-backdrop" (click)="closeDeleteProductModal()">

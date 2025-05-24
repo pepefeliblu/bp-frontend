@@ -15,7 +15,7 @@ import {
 import {FormControl, ReactiveFormsModule} from '@angular/forms';
 import { TooltipDirective } from '../tooltip/tooltip.directive';
 import { map, startWith } from 'rxjs/operators';
-import { AddProductComponent } from '../add-product/add-product.component';
+import { UpsertProductComponent } from '../upsert-product/upsert-product.component';
 
 @Component({
   // eslint-disable-next-line @angular-eslint/component-selector
@@ -23,7 +23,7 @@ import { AddProductComponent } from '../add-product/add-product.component';
   templateUrl: './product-list.component.html',
   styleUrls: ['./product-list.component.scss'],
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, TooltipDirective, AddProductComponent]
+  imports: [CommonModule, ReactiveFormsModule, TooltipDirective, UpsertProductComponent]
 })
 export class ProductListComponent implements OnInit, OnDestroy {
   private readonly destroy$ = new Subject<void>();
