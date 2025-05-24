@@ -4,7 +4,7 @@
 
 ## Overview
 
-BpFrontend is an Angular-based frontend application built with Nx workspace. It provides a modern, responsive user interface for managing and displaying data with features like filtering, sorting, and real-time updates.
+BP-Frontend is an Angular-based frontend application built with Nx workspace. It provides a modern, responsive user interface for managing and displaying data with features like filtering, sorting, and real-time updates.
 
 ## Features
 
