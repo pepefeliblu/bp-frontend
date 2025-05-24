@@ -71,8 +71,7 @@ npx nx serve bp-frontend --prod
 
 - `apps/bp-frontend/`: Main application code
 - `libs/shared/ui/`: Shared UI components
-- `libs/shared/data-access/`: Data access layer and services
-- `libs/shared/utils/`: Utility functions and helpers
+- `libs/shared/models/`: Shared model structures
 
 ## Testing
 
