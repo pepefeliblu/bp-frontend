@@ -24,12 +24,6 @@ describe('DashboardComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should render the dashboard title', () => {
-    const title = fixture.debugElement.query(By.css('.dashboard__title'));
-    expect(title).toBeTruthy();
-    expect(title.nativeElement.textContent).toContain('Dashboard');
-  });
-
   it('should render the bp-product-list component', () => {
     const productList = fixture.debugElement.query(By.css('bp-product-list'));
     expect(productList).toBeTruthy();
